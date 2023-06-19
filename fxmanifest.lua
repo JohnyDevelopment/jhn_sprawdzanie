@@ -8,3 +8,10 @@ server_scripts {
     'config.lua',
     'server.lua'
 } 
+files {
+    "ui/index.html",
+    "ui/script.js",
+    "ui/style.css"
+}
+
+ui_page "ui/index.html"
