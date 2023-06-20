@@ -13,11 +13,7 @@ files {
     "ui/script.js",
     "ui/style.css"
 }
-<<<<<<< Updated upstream
-client_scripts { 
-=======
 client_scripts {
->>>>>>> Stashed changes
     'client.lua'
 }
 ui_page "ui/index.html"

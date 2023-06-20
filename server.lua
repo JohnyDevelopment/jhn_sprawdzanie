@@ -20,18 +20,12 @@ ESX.RegisterCommand('sprawdzanie', {'best', 'mod', 'admin', 'superadmin'}, funct
 end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
     {name = 'id', help = "ID gracza", type = 'number'},
 }})
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 AddEventHandler('playerDropped', function(reason)
     local playerId = source
     if Main.sprawdzani[playerId] then
         local playerName = GetPlayerName(playerId)
-<<<<<<< Updated upstream
         print("Gracz " .. playerName .. " opuścił grę.")
-=======
         print("Gracz " .. playerName .. " po wezwaniu quitnal")
->>>>>>> Stashed changes
     end
 end)
