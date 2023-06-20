@@ -14,22 +14,39 @@ body {
     height: 50vh;
     width: 50vw;
     border-radius: 1.5rem;
-    display: block;
+    display: none;
 }
 
 #title {
+    position: absolute;
     width: 95%;
+    top: 4%;
+    left: -5%;
     margin: 7.5%;
     height: 10%;
 }
-
+#other {
+    position: absolute;
+    width: 95%;
+    top: 30%;
+    left: -5%;
+    margin: 7.5%;
+    height: 10%;
+}
 .text {
+    
     color: azure;
     font-size: 6.5vh;
     text-align: center;
 }
 .text2 {
     color: azure;
+    font-size: 4vh;
+    text-align: center;
+}
+.text3 {
+    color: azure;
     font-size: 3.5vh;
     text-align: center;
 }
+

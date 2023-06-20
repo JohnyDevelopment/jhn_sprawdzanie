@@ -2,15 +2,33 @@ ESX = exports["es_extended"]:getSharedObject()
 local Main = {
     sprawdzani = {}
 }
-ESX.RegisterCommand({'sprawdzanie'}, 'admin', function(xPlayer, args, showError)
-    Main.id = args.id 
-    if Main.id then 
-        if GetPlayerName(Main.id) then 
-            xPlayer.Scaleform.ShowFreemodeMessage('~r~zapraszam na sprawdzanie', 'quit = perm', 5)
-            xPlayer.showNotification('Wezwales '..GetPlayerName(Main.id)..". Na sprawdzanie")
+Main.wezwanie = function(xTarget, xPlayer)
+    local admin_name = GetPlayerName(xPlayer.source)
+    print(xTarget.source)
+    TriggerClientEvent('jhn_sprawdzanie:wejdz', xTarget.source, admin_name)
+    Main.sprawdzani[xTarget.source] = xTarget
+end
+ESX.RegisterCommand('sprawdzanie', {'best', 'mod', 'admin', 'superadmin'}, function(xPlayer, args, showError)
+    if args.id then
+        local xTarget = ESX.GetPlayerFromId(args.id)
+        if xPlayer and xTarget then
+            Main.wezwanie(xTarget, xPlayer)
         else 
+            xPlayer.showNotification('Uzytkownik o tym id jest offline!')
         end
-    else 
-        xPlayer.ShowNotification(Locales[Config.lang]['id'])
     end
-end, false, {help = Locales[Config.lang]['check_sugestion'], arguments = {{name = 'id', help = Locales[Config.lang]['id_info'], type = 'any'}}})
+end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
+    {name = 'id', help = "ID gracza", type = 'number'},
+}})
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5000)
+        for source, player in pairs(Main.sprawdzani) do
+            if not DoesEntityExist(GetPlayerPed(source)) then
+                print('Sprawdzana osoba (' .. GetPlayerName(source) .. ') opuściła serwer.')
+                Main.sprawdzani[source] = nil 
+            end
+        end
+    end
+end)
