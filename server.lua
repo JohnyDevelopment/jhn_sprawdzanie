@@ -26,6 +26,5 @@ AddEventHandler('playerDropped', function(reason)
     if Main.sprawdzani[playerId] then
         local playerName = GetPlayerName(playerId)
         print("Gracz " .. playerName .. " opuścił grę.")
-        print("Gracz " .. playerName .. " po wezwaniu quitnal")
     end
 end)
