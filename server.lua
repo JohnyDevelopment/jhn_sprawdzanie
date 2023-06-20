@@ -20,6 +20,18 @@ ESX.RegisterCommand('sprawdzanie', {'best', 'mod', 'admin', 'superadmin'}, funct
 end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
     {name = 'id', help = "ID gracza", type = 'number'},
 }})
+ESX.RegisterCommand('wynik_sprawdzania', {'best', 'mod', 'admin', 'superadmin'}, function(xPlayer, args, showError)
+    if args.id then
+        local xTarget = ESX.GetPlayerFromId(args.id)
+        if xPlayer and xTarget then
+            Main.wezwanie(xTarget, xPlayer)
+        else 
+            xPlayer.showNotification('Uzytkownik o tym id jest offline!')
+        end
+    end
+end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
+    {name = 'id', help = "ID gracza", type = 'number'},
+}})
 
 AddEventHandler('playerDropped', function(reason)
     local playerId = source

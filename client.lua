@@ -1,4 +1,3 @@
-print("xx")
 local Main = {
 
 }
@@ -10,4 +9,5 @@ Main.wezwanie = function(admin_name)
 
     })
 end
+
 RegisterNetEvent("jhn_sprawdzanie:wejdz", Main.wezwanie)
