@@ -1,5 +1,9 @@
 const Container = document.getElementById("container");
 const adminek = document.getElementById("kto");
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 window.addEventListener("message", function(event){
     let e = event.data;
     if(e.action=="show"){
