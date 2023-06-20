@@ -13,5 +13,7 @@ files {
     "ui/script.js",
     "ui/style.css"
 }
-
+client_scripts { 
+    'client.lua'
+}
 ui_page "ui/index.html"

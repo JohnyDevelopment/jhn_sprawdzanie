@@ -21,14 +21,10 @@ end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
     {name = 'id', help = "ID gracza", type = 'number'},
 }})
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(5000)
-        for source, player in pairs(Main.sprawdzani) do
-            if not DoesEntityExist(GetPlayerPed(source)) then
-                print('Sprawdzana osoba (' .. GetPlayerName(source) .. ') opuściła serwer.')
-                Main.sprawdzani[source] = nil 
-            end
-        end
+AddEventHandler('playerDropped', function(reason)
+    local playerId = source
+    if Main.sprawdzani[playerId] then
+        local playerName = GetPlayerName(playerId)
+        print("Gracz " .. playerName .. " opuścił grę.")
     end
 end)
