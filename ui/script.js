@@ -4,7 +4,7 @@ window.addEventListener("message", function(event){
     let e = event.data;
     if(e.action=="show"){
         Container.style.display = "block";
-        adminek.textContent = e.admin_name
+        adminek.textContent = e.admin_name;
     }
     if(e.action=="close"){
         Container.style.display = "none";
