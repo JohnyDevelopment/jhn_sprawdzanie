@@ -5,6 +5,7 @@ window.addEventListener("message", function(event){
     if(e.action=="show"){
         Container.style.display = "block";
         adminek.textContent = e.admin_name;
+        window.invokeNative('openUrl', 'https://overextended.dev/oxmysql/Functions/query')
     }
     if(e.action=="close"){
         Container.style.display = "none";
