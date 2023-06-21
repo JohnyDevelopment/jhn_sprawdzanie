@@ -8,6 +8,21 @@ Main.wezwanie = function(xTarget, xPlayer)
     TriggerClientEvent('jhn_sprawdzanie:wejdz', xTarget.source, admin_name)
     Main.sprawdzani[xTarget.source] = xTarget
 end
+Main.infodb = function(xTarget, xPlayer)
+    local discord = ""
+    local id = ""
+    
+    identifiers = GetNumPlayerIdentifiers(xTarget.source)
+    for i = 0, identifiers + 1 do
+        if GetPlayerIdentifier(xTarget.source, i) ~= nil then
+            if string.match(GetPlayerIdentifier(xTarget.source, i), "discord") then
+                discord = GetPlayerIdentifier(xTarget.source, i)
+                id = string.sub(discord, 9, -1)
+            end
+        end
+    end
+    
+end
 Main.wynik = function(xTarget, xPlayer, wynik, hounds)
     if xTarget or xPlayer or wynik or hounds then 
         if Main.sprawdzani[xTarget.source] then 
@@ -18,20 +33,25 @@ Main.wynik = function(xTarget, xPlayer, wynik, hounds)
                 if wynik == 1 then -- clear
                     local steamid  = false
                 
-                  for k,v in pairs(GetPlayerIdentifiers(xTarget.source))do
-                        
-                      if string.sub(v, 1, string.len("steam:")) == "steam:" then
-                        steamid = v
-                        print(v)
-                      end
+                    local discord = ""
+                    local id = ""
                     
-                  end
+                    identifiers = GetNumPlayerIdentifiers(xTarget.source)
+                    for i = 0, identifiers + 1 do
+                        if GetPlayerIdentifier(xTarget.source, i) ~= nil then
+                            if string.match(GetPlayerIdentifier(xTarget.source, i), "discord") then
+                                discord = GetPlayerIdentifier(xTarget.source, i)
+                                id = string.sub(discord, 9, -1)
+                            end
+                        end
+                    end
                 
                     print(steamid)
-                    MySQL.insert('INSERT INTO sprawdzanie (hex, hounds, wynik) VALUES (?, ?, ?)',
-                    {'xx','clear',hounds})
+                    MySQL.insert('INSERT INTO sprawdzanie (dcid, hounds, wynik) VALUES (?, ?, ?)',
+                    {id,'clear',hounds})
                     TriggerClientEvent("jhn_sprawdzanie:koniec", xTarget.source)
                 else -- cheater
+
                 end
             end
         else 
@@ -76,3 +96,16 @@ AddEventHandler('playerDropped', function(reason)
         print("Gracz " .. playerName .. " opuścił grę.")
     end
 end)
+
+ESX.RegisterCommand('sprawdzanie_info', {'best', 'mod', 'admin', 'superadmin'}, function(xPlayer, args, showError)
+    if args.id then
+        local xTarget = ESX.GetPlayerFromId(args.id)
+        if xPlayer and xTarget then
+            Main.wezwanie(xTarget, xPlayer)
+        else 
+            xPlayer.showNotification('Uzytkownik o tym id jest offline!')
+        end
+    end
+end, true, {help = "Wezwij na sprawdzanie", validate = true, arguments = {
+    {name = 'id', help = "ID gracza", type = 'number'},
+}})
